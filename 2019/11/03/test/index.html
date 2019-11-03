@@ -3,32 +3,36 @@
 <head>
   <meta charset="utf-8">
   
-  <title>test | 七色星露</title>
+  <title>cs224n笔记 | 七色星露</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="机器学习自然语言处理" />
+  <meta name="keywords" content="DeepLearningNLPWord2vecword embeddings" />
   
   
   
   
-  <meta name="description" content="あなたの愛したこの世界が私も今少し好きで">
-<meta name="keywords" content="机器学习,自然语言处理">
+  <meta name="description" content="CS224N笔记 Lecture 01CS224N是斯坦福大学的经典NLP教程，主讲师是Chris Manning教授。课程官网包含很多内容：课程ppt，笔记，参考资料和很多补充阅读材料。课程视频在youtube和Bilibili都能找到（英文字幕，中文机翻）。课程官网：http:&#x2F;&#x2F;web.stanford.edu&#x2F;class&#x2F;cs224n&#x2F;。我将大体记录下课程和自己的学习体会。 Lecture">
+<meta name="keywords" content="DeepLearning,NLP,Word2vec,word embeddings">
 <meta property="og:type" content="article">
-<meta property="og:title" content="test">
+<meta property="og:title" content="CS224N笔记">
 <meta property="og:url" content="https:&#x2F;&#x2F;silic1de.github.io&#x2F;2019&#x2F;11&#x2F;03&#x2F;test&#x2F;index.html">
 <meta property="og:site_name" content="七色星露">
-<meta property="og:description" content="あなたの愛したこの世界が私も今少し好きで">
+<meta property="og:description" content="CS224N笔记 Lecture 01CS224N是斯坦福大学的经典NLP教程，主讲师是Chris Manning教授。课程官网包含很多内容：课程ppt，笔记，参考资料和很多补充阅读材料。课程视频在youtube和Bilibili都能找到（英文字幕，中文机翻）。课程官网：http:&#x2F;&#x2F;web.stanford.edu&#x2F;class&#x2F;cs224n&#x2F;。我将大体记录下课程和自己的学习体会。 Lecture">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-11-03T11:20:32.692Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload.cc&#x2F;i1&#x2F;2019&#x2F;11&#x2F;03&#x2F;0RIiGb.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload.cc&#x2F;i1&#x2F;2019&#x2F;11&#x2F;03&#x2F;V4xbl7.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload.cc&#x2F;i1&#x2F;2019&#x2F;11&#x2F;03&#x2F;iHNo4R.png">
+<meta property="og:updated_time" content="2019-11-03T18:18:03.065Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;upload.cc&#x2F;i1&#x2F;2019&#x2F;11&#x2F;03&#x2F;0RIiGb.png">
   
     <link rel="alternate" href="/atom.xml" title="七色星露" type="application/atom+xml">
   
 
   
 
-  <link rel="icon" href="/css/images/mylogo.jpg">
-  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  <link rel="icon" href="/css/images/testlogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/testlogo.jpg">
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
@@ -92,7 +96,7 @@
               <a class="brand" style="
                  margin-top: 0px;"  
                 href="#" data-toggle="modal" data-target="#myModal" >
-                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/testlogo.jpg">
               </a>
             
             
@@ -168,7 +172,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      test
+      CS224N笔记
     </h1>
   
 
@@ -177,7 +181,7 @@
     <div class="article-meta">
       
 	<a href="/2019/11/03/test/" class="article-date">
-	  <time datetime="2019-11-03T10:38:27.000Z" itemprop="datePublished">2019-11-03</time>
+	  <time datetime="2019-11-03T10:38:27.505Z" itemprop="datePublished">2019-11-03</time>
 	</a>
 
       
@@ -195,7 +199,83 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="CS224N笔记-Lecture-01"><a href="#CS224N笔记-Lecture-01" class="headerlink" title="CS224N笔记 Lecture 01"></a>CS224N笔记 Lecture 01</h1><p>CS224N是斯坦福大学的经典<abbr title="Natural Language Processing">NLP</abbr>教程，主讲师是Chris Manning教授。<br>课程官网包含很多内容：课程ppt，笔记，参考资料和很多补充阅读材料。<br>课程视频在youtube和Bilibili都能找到（英文字幕，中文机翻）。<br>课程官网：<a href="http://web.stanford.edu/class/cs224n/" target="_blank" rel="noopener">http://web.stanford.edu/class/cs224n/</a>。<br>我将大体记录下课程和自己的学习体会。</p>
+<h1 id="Lecture-01-Introduction-and-Word-Vectors"><a href="#Lecture-01-Introduction-and-Word-Vectors" class="headerlink" title="Lecture 01 Introduction and Word Vectors"></a>Lecture 01 Introduction and Word Vectors</h1><h2 id="本课涉及的内容"><a href="#本课涉及的内容" class="headerlink" title="本课涉及的内容"></a>本课涉及的内容</h2><ul>
+<li>理解高效的现代深度学习方法<ul>
+<li>深度学习基础及NLP中关键的方法：<abbr title="Recurrent Nurual Networks(循环神经网络)">RNN</abbr>, <abbr title="注意力机制">Attention</abbr>, etc.</li>
+</ul>
+</li>
+<li>全面了解人类语言以及理解和产生人类语言的困难</li>
+<li>理解并能够建立系统（pytorch）去解决一些NLP中的主要问题<ul>
+<li>word meaning, dependency parsing, machine translation, question answering</li>
+</ul>
+</li>
+</ul>
+<h3 id="新变化"><a href="#新变化" class="headerlink" title="新变化"></a>新变化</h3><ul>
+<li>包含了更多新内容：character models、Transformer、safety/fairness、mutitask learn</li>
+<li>从TensorFlow改用PyTorch</li>
+</ul>
+<h2 id="人类语言和词义表达"><a href="#人类语言和词义表达" class="headerlink" title="人类语言和词义表达"></a>人类语言和词义表达</h2><ul>
+<li>传统方法：WordNet基于知识结构的词库，记录每个词的同义词集合，以及多层归属关系。<ul>
+<li>缺陷：不能表达细微差别(nuance)，很难与时俱进，主观性(subjective)</li>
+</ul>
+</li>
+<li>离散符号：onehot vectors<ul>
+<li>缺陷：过于稀疏，任意两个向量是正交的，无法计算相似度</li>
+</ul>
+</li>
+</ul>
+<img src="https://upload.cc/i1/2019/11/03/0RIiGb.png" width="80%">
+
+
+<h3 id="词向量"><a href="#词向量" class="headerlink" title="词向量"></a>词向量</h3><ul>
+<li>word vectors or word embeddings</li>
+<li>dense vectors 尽量使得在相似的上下文中词的向量表示也相似<img src="https://upload.cc/i1/2019/11/03/V4xbl7.png" width="80%">
+
+</li>
+</ul>
+<h2 id="Word2vec：概览"><a href="#Word2vec：概览" class="headerlink" title="Word2vec：概览"></a>Word2vec：概览</h2><ul>
+<li><a href="http://arxiv.org/pdf/1301.3781.pdf" target="_blank" rel="noopener" title="A framework for learning word vectors">Efficient Estimation of Word Representations in Vector Space(Mikolov et al. 2013)</a></li>
+<li>思想：<ul>
+<li>巨大的语料库</li>
+<li>在固定的词表中每个单词由一个向量表示</li>
+<li>遍历一段文本的每个位置t, 这段文本有<abbr title="center word">中心词</abbr>c,<abbr title="context(outside) words">外部词</abbr>o</li>
+<li>利用c和o向量的相似度计算在给出c时o的概率(反之亦然)</li>
+<li>调整词向量使得概率最大化<img src="https://upload.cc/i1/2019/11/03/iHNo4R.png" width="80%">
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Word2vec：目标函数"><a href="#Word2vec：目标函数" class="headerlink" title="Word2vec：目标函数"></a>Word2vec：目标函数</h3><p>目标函数最小化–预测概率最大化</p>
+<img src = "https://upload.cc/i1/2019/11/03/ZkaL9f.png" width="80%">
+
+<h3 id="Word2vec：预测函数"><a href="#Word2vec：预测函数" class="headerlink" title="Word2vec：预测函数"></a>Word2vec：预测函数</h3><p>$$<br>P(o{\mid}c)=\frac{exp(u_o^Tv_c)}<br>                {\sum_{w \in V}exp(u_w^Tv_c)}<br>$$</p>
+<ul>
+<li><p>点乘比较o和c的相似度，乘积越大，概率越大.</p>
+</li>
+<li><p>$u^Tv =u^T{\cdot}v=\sum_{i=1}^nu^iv^i$</p>
+</li>
+</ul>
+<p><strong>softmax fuction</strong></p>
+<p>$$<br>softmax(x_i)=\frac{exp(x_i)}<br>                {\sum_{j=1}^nexp(x_j)}<br>                =p_i<br>$$</p>
+<p>softmax函数将任意$x_i$的值映射到概率分布$p_i$<br>在深度学习中常用到softmax函数</p>
+<h3 id="Word2vec的两种模型"><a href="#Word2vec的两种模型" class="headerlink" title="Word2vec的两种模型"></a>Word2vec的两种模型</h3><ul>
+<li>Skip-Gram 预测中心词的上下文</li>
+<li>Continuous bag of words 利用上下文预测中心词</li>
+</ul>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>为了训练出一个模型，我们需要不断调整参数使得损失最小化</p>
+<h3 id="链式法则-Chain-rule"><a href="#链式法则-Chain-rule" class="headerlink" title="链式法则(Chain rule)"></a>链式法则(Chain rule)</h3><img src= "https://upload.cc/i1/2019/11/04/e9F4v0.png" width="80%">
+
+<p>利用链式法则计算出所有词向量的梯度(中心词，外部词)</p>
+<h3 id="梯度下降-Gradient-descent"><a href="#梯度下降-Gradient-descent" class="headerlink" title="梯度下降(Gradient descent)"></a>梯度下降(Gradient descent)</h3><img src ="https://upload.cc/i1/2019/11/04/v0Kkh1.png" width="80%">
+
+<h3 id="随机梯度下降-Stochastic-gradient-descent"><a href="#随机梯度下降-Stochastic-gradient-descent" class="headerlink" title="随机梯度下降(Stochastic gradient descent)"></a>随机梯度下降(Stochastic gradient descent)</h3><ul>
+<li>(批量)梯度下降每次迭代使用所有样本进行更新，计算代价大运行慢</li>
+<li>对于大型的神经网络不适用</li>
+<li>SGD每次迭代只使用一个样本，速度更快</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
@@ -229,7 +309,7 @@
       
       
         
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" rel="tag">自然语言处理</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DeepLearning/" rel="tag">DeepLearning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NLP/" rel="tag">NLP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Word2vec/" rel="tag">Word2vec</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word-embeddings/" rel="tag">word embeddings</a></li></ul>
 
       
 
@@ -238,6 +318,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2019/11/04/my/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          my
+        
+      </div>
+    </a>
   
   
     <a href="/2019/11/03/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
@@ -256,7 +345,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-        <ol class="nav">None</ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CS224N笔记-Lecture-01"><span class="nav-number">1.</span> <span class="nav-text">CS224N笔记 Lecture 01</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lecture-01-Introduction-and-Word-Vectors"><span class="nav-number">2.</span> <span class="nav-text">Lecture 01 Introduction and Word Vectors</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#本课涉及的内容"><span class="nav-number">2.1.</span> <span class="nav-text">本课涉及的内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新变化"><span class="nav-number">2.1.1.</span> <span class="nav-text">新变化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#人类语言和词义表达"><span class="nav-number">2.2.</span> <span class="nav-text">人类语言和词义表达</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#词向量"><span class="nav-number">2.2.1.</span> <span class="nav-text">词向量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Word2vec：概览"><span class="nav-number">2.3.</span> <span class="nav-text">Word2vec：概览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Word2vec：目标函数"><span class="nav-number">2.3.1.</span> <span class="nav-text">Word2vec：目标函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Word2vec：预测函数"><span class="nav-number">2.3.2.</span> <span class="nav-text">Word2vec：预测函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Word2vec的两种模型"><span class="nav-number">2.3.3.</span> <span class="nav-text">Word2vec的两种模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">2.4.</span> <span class="nav-text">优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#链式法则-Chain-rule"><span class="nav-number">2.4.1.</span> <span class="nav-text">链式法则(Chain rule)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降-Gradient-descent"><span class="nav-number">2.4.2.</span> <span class="nav-text">梯度下降(Gradient descent)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机梯度下降-Stochastic-gradient-descent"><span class="nav-number">2.4.3.</span> <span class="nav-text">随机梯度下降(Stochastic gradient descent)</span></a></li></ol></li></ol></li></ol>
     
     </div>
   </aside>
