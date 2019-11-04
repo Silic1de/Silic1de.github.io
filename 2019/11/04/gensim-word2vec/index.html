@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>gensim word2vec | 七色星露</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="GensimWord2VecNLP" />
+  
+  
+  
+  
+  <meta name="description" content="用Gensim训练word2vec在gensim中实现word2vec很简单。gensim中封装了word2vec，doc2vec等模型，本文主要涉及word2vec的使用 模型gensim官方文档 12345678class gensim.models.word2vec.Word2Vec(                    sentences=None, corpus_file=None,">
+<meta name="keywords" content="Gensim,Word2Vec,NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gensim word2vec">
+<meta property="og:url" content="https:&#x2F;&#x2F;silic1de.github.io&#x2F;2019&#x2F;11&#x2F;04&#x2F;gensim-word2vec&#x2F;index.html">
+<meta property="og:site_name" content="七色星露">
+<meta property="og:description" content="用Gensim训练word2vec在gensim中实现word2vec很简单。gensim中封装了word2vec，doc2vec等模型，本文主要涉及word2vec的使用 模型gensim官方文档 12345678class gensim.models.word2vec.Word2Vec(                    sentences=None, corpus_file=None,">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-11-04T15:00:01.945Z">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="七色星露" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/testlogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/testlogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt; src:url("css/fonts/FuturaPTBold.otf") format("woff");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt-light; src:url("css/fonts/FuturaPTBook.otf") format("woff");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt-italic; src:url("css/fonts/FuturaPTBookOblique.otf") format("woff");font-weight:400;font-style:italic;}
+}
+
+  </style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/testlogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-gensim-word2vec" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      gensim word2vec
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/11/04/gensim-word2vec/" class="article-date">
+	  <time datetime="2019-11-04T14:57:53.000Z" itemprop="datePublished">2019-11-04</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/notes/">notes</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+      
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="用Gensim训练word2vec"><a href="#用Gensim训练word2vec" class="headerlink" title="用Gensim训练word2vec"></a>用Gensim训练word2vec</h2><p>在gensim中实现word2vec很简单。<br>gensim中封装了word2vec，doc2vec等模型，本文主要涉及word2vec的使用</p>
+<h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><p>gensim官方文档</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">gensim</span>.<span class="title">models</span>.<span class="title">word2vec</span>.<span class="title">Word2Vec</span><span class="params">(</span></span></span><br><span class="line"><span class="class"><span class="params">                    sentences=None, corpus_file=None, size=<span class="number">100</span>, alpha=<span class="number">0.025</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">                    window=<span class="number">5</span>, min_count=<span class="number">5</span>, max_vocab_size=None, sample=<span class="number">0.001</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">                    seed=<span class="number">1</span>, workers=<span class="number">3</span>, min_alpha=<span class="number">0.0001</span>, sg=<span class="number">0</span>, hs=<span class="number">0</span>, negative=<span class="number">5</span>,</span></span></span><br><span class="line"><span class="class"><span class="params">                    ns_exponent=<span class="number">0.75</span>, cbow_mean=<span class="number">1</span>, hashfxn=&lt;built-in function hash&gt;,</span></span></span><br><span class="line"><span class="class"><span class="params">                    iter=<span class="number">5</span>, null_word=<span class="number">0</span>, trim_rule=None, </span></span></span><br><span class="line"><span class="class"><span class="params">                    sorted_vocab=<span class="number">1</span>, batch_words=<span class="number">10000</span>, </span></span></span><br><span class="line"><span class="class"><span class="params">                    compute_loss=False, callbacks=<span class="params">()</span>, max_final_vocab=None)</span></span></span><br></pre></td></tr></table></figure>
+<p>主要参数</p>
+<ul>
+<li>sentences 预处理好的语料库，必须是可迭代的，可以是简单的列表或者迭代器</li>
+<li>size 维度</li>
+<li>window 窗口大小</li>
+<li>min_count 最小出现次数，忽略频数低于它的单词（不计算词向量）</li>
+<li>alpha 学习率</li>
+<li>sg 训练算法 1 for skip-gram; otherwise CBOW</li>
+<li>negative 负采样数量</li>
+<li>workers 线程数</li>
+</ul>
+<p><a href="https://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec" target="_blank" rel="noopener">详细参考官方文档</a></p>
+<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><p>sentences为可迭代的对象，这里考虑两种情况</p>
+<h3 id="语料为列表"><a href="#语料为列表" class="headerlink" title="语料为列表"></a>语料为列表</h3><p>每行对应一个句子，完成分词</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gensim.models <span class="keyword">import</span> Word2Vec</span><br><span class="line">sentences =[[<span class="string">'NLP'</span>, <span class="string">'Deep learning'</span>, <span class="string">'Machine learning'</span>],</span><br><span class="line">            [<span class="string">'CV'</span>, <span class="string">'Deep learning'</span>, <span class="string">'Machine learning'</span>]]</span><br><span class="line">model = Word2Vec(sentences, min_count =<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>Python列表可以直接作为输入，但输入量很大时会占据大量内存</p>
+<h3 id="语料为文件（处理为迭代器）"><a href="#语料为文件（处理为迭代器）" class="headerlink" title="语料为文件（处理为迭代器）"></a>语料为文件（处理为迭代器）</h3><p>对路径下的所有文件生效<br>这里使用了哈利波特原著共7部作为语料库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> nltk.tokenize <span class="keyword">import</span> word_tokenize</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySentences</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, dirname)</span>:</span></span><br><span class="line">        self.dirname = dirname <span class="comment"># 相对路径</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> fname <span class="keyword">in</span> os.listdir(self.dirname):</span><br><span class="line">            <span class="keyword">for</span> line <span class="keyword">in</span> open(os.path.join(self.dirname, fname), encoding=<span class="string">'gbk'</span>):</span><br><span class="line">                <span class="comment"># 可以用各种方法进行分词，这里使用nltk</span></span><br><span class="line">                line = word_tokenize(line.lower())</span><br><span class="line">                <span class="keyword">yield</span> line</span><br><span class="line">            </span><br><span class="line">sentences = MySentences(<span class="string">'corpus'</span>)</span><br><span class="line">model = Word2Vec(sentences,</span><br><span class="line">                 window = <span class="number">4</span>, </span><br><span class="line">                 size = <span class="number">100</span>, </span><br><span class="line">                 negative = <span class="number">20</span>, </span><br><span class="line">                 min_count = <span class="number">2</span>,</span><br><span class="line">                 workers =<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="模型保存与加载"><a href="#模型保存与加载" class="headerlink" title="模型保存与加载"></a>模型保存与加载</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model.save(<span class="string">'my_model'</span>)</span><br><span class="line"><span class="keyword">del</span> model</span><br><span class="line">new_model = Word2Vec.load(<span class="string">'my_model'</span>)</span><br></pre></td></tr></table></figure>
+<p>Word2Vec对象还支持online learning。<br>可以将更多训练数据传递给一个以及训练好的Word2Vec对象，继续更新参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">new_model = Word2Vec.load(<span class="string">'my_model'</span>)</span><br><span class="line">new_model.train(more_sentences)</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>对训练好的Word2Vec模型进行一些操作。<br><a href="https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.Word2VecKeyedVectors" target="_blank" rel="noopener">详细参考官网</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new_model.wv.most_similar(<span class="string">'hear'</span>)</span><br></pre></td></tr></table></figure>
+<p>output:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[(<span class="string">'see'</span>, <span class="number">0.8704479932785034</span>),</span><br><span class="line"> (<span class="string">'feel'</span>, <span class="number">0.8061766624450684</span>),</span><br><span class="line"> (<span class="string">'tell'</span>, <span class="number">0.7629097700119019</span>),</span><br><span class="line"> (<span class="string">'speak'</span>, <span class="number">0.753010630607605</span>),</span><br><span class="line"> (<span class="string">'understand'</span>, <span class="number">0.7412168383598328</span>),</span><br><span class="line"> (<span class="string">'believe'</span>, <span class="number">0.7404022216796875</span>),</span><br><span class="line"> (<span class="string">'stop'</span>, <span class="number">0.7337598204612732</span>),</span><br><span class="line"> (<span class="string">'talk'</span>, <span class="number">0.732893168926239</span>),</span><br><span class="line"> (<span class="string">'help'</span>, <span class="number">0.7100141644477844</span>),</span><br><span class="line"> (<span class="string">'ask'</span>, <span class="number">0.6989377737045288</span>)]</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>[1] python训练work2vec词向量（python gensim）<a href="https://blog.csdn.net/shuihupo/article/details/85156544" target="_blank" rel="noopener">https://blog.csdn.net/shuihupo/article/details/85156544</a></p>
+<p>[2] word2vec词向量中文语料处理(python gensim word2vec总结）<a href="https://blog.csdn.net/shuihupo/article/details/85162237" target="_blank" rel="noopener">https://blog.csdn.net/shuihupo/article/details/85162237</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gensim/" rel="tag">Gensim</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NLP/" rel="tag">NLP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Word2Vec/" rel="tag">Word2Vec</a></li></ul>
+
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/03/test/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CS224N笔记01</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用Gensim训练word2vec"><span class="nav-number">1.</span> <span class="nav-text">用Gensim训练word2vec</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型"><span class="nav-number">2.</span> <span class="nav-text">模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练"><span class="nav-number">3.</span> <span class="nav-text">训练</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语料为列表"><span class="nav-number">3.1.</span> <span class="nav-text">语料为列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语料为文件（处理为迭代器）"><span class="nav-number">3.2.</span> <span class="nav-text">语料为文件（处理为迭代器）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型保存与加载"><span class="nav-number">3.3.</span> <span class="nav-text">模型保存与加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2019 七色星露 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            七色星露
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Silic1de All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
